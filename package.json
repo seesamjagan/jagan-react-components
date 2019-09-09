@@ -1,0 +1,46 @@
+{
+    "name": "jagan-react-components",
+    "version": "0.0.1",
+    "main": "./lib/index.js",
+    "module": "./es/index.js",
+    "private": true,
+    "scripts": {
+        "clean": "rimraf dist es lib",
+        "prebuild": "npm run clean",
+        "build:es": "babel src --out-dir ./es",
+        "build": "npm run build:es && webpack --env.NODE_ENV=production",
+        "start": "webpack-dev-server --open --env.NODE_ENV=development"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/seesamjagan/jagan-react-components.git"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.5.5",
+        "@babel/core": "^7.5.5",
+        "@babel/preset-env": "^7.5.5",
+        "@babel/preset-react": "^7.0.0",
+        "babel-loader": "^8.0.6",
+        "clean-webpack-plugin": "^3.0.0",
+        "css-loader": "^3.2.0",
+        "html-webpack-plugin": "^3.2.0",
+        "mini-css-extract-plugin": "^0.8.0",
+        "node-sass": "^4.12.0",
+        "optimize-css-assets-webpack-plugin": "^5.0.3",
+        "react": "^16.9.0",
+        "react-dom": "^16.9.0",
+        "rimraf": "^3.0.0",
+        "sass-loader": "^8.0.0",
+        "style-loader": "^1.0.0",
+        "terser-webpack-plugin": "^1.4.1",
+        "webpack": "^4.39.3",
+        "webpack-cli": "^3.3.7",
+        "webpack-dev-server": "^3.8.0",
+        "webpack-merge": "^4.2.2"
+    },
+    "peerDependencies": {
+        "react": "^16.9.0",
+        "react-dom": "^16.9.0"
+    },
+    "dependencies": {}
+}
