@@ -1,14 +1,14 @@
 {
     "name": "jagan-react-components",
     "version": "0.0.1",
-    "main": "./lib/index.js",
-    "module": "./es/index.js",
+    "main": "./lib/umd/index.js",
+    "module": "./lib/esm/index.js",
     "private": true,
     "scripts": {
-        "clean": "rimraf dist es lib",
+        "clean": "rimraf lib",
         "prebuild": "npm run clean",
-        "build:es": "babel src --out-dir ./es",
-        "build": "npm run build:es && webpack --env.NODE_ENV=production",
+        "build:lib": "rollup -c",
+        "build": "npm run build:lib",
         "start": "webpack-dev-server --open --env.NODE_ENV=development"
     },
     "repository": {
@@ -36,12 +36,18 @@
         "webpack": "^4.39.3",
         "webpack-cli": "^3.3.7",
         "webpack-dev-server": "^3.8.0",
-        "webpack-merge": "^4.2.2"
+        "webpack-merge": "^4.2.2",
+        "rollup-plugin-babel": "^4.3.3",
+        "rollup-plugin-buble": "^0.19.8",
+        "rollup-plugin-commonjs": "^10.1.0",
+        "rollup-plugin-node-resolve": "^5.2.0",
+        "rollup-plugin-postcss": "^2.0.3",
+        "rollup-plugin-replace": "^2.2.0",
+        "rollup-plugin-terser": "^5.1.1"
     },
     "peerDependencies": {
         "react": "^16.9.0",
-        "react-dom": "^16.9.0",
-        "node-sass": "^4.12.0"
+        "react-dom": "^16.9.0"
     },
     "dependencies": {}
 }
