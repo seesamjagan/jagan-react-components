@@ -1,6 +1,6 @@
 {
     "name": "jagan-react-components",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "main": "./lib/umd/index.js",
     "module": "./lib/esm/index.js",
     "private": true,
