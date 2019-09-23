@@ -1,6 +1,6 @@
 {
   "name": "jagan-react-components",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "private": true,
   "description": "library for web ui components build for react js",
   "keywords": [
@@ -46,6 +46,7 @@
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.8.1",
+    "webpack-node-externals": "^1.7.2",
     "xml-loader": "^1.2.1"
   },
   "peerDependencies": {

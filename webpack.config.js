@@ -1,17 +1,14 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const { peerDependencies } = require("./package.json");
-
+const nodeExternals = require('webpack-node-externals');
 const devMode = process.env.NODE_ENV !== "production";
 
-console.log({devMode, peerDependencies})
+console.log({devMode})
 
 module.exports = [
   {
-    mode: "production",//"development",
-    devtool: "inline-source-map",
+    mode: "production",
     entry: { main: "./src/index.js" },
     output: {
       filename: "index.js", //"[name].bundle.[hash].js",
@@ -20,7 +17,7 @@ module.exports = [
       libraryTarget: "umd",
       publicPath: "/"
     },
-    externals: peerDependencies,
+    externals: [nodeExternals()],
     plugins: [
       new CleanWebpackPlugin(),
       new MiniCssExtractPlugin({
