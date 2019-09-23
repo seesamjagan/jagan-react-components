@@ -2,11 +2,11 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const { peerDependency } = require("./package.json");
+const { peerDependencies } = require("./package.json");
 
 const devMode = process.env.NODE_ENV !== "production";
 
-console.log({devMode})
+console.log({devMode, peerDependencies})
 
 module.exports = [
   {
@@ -20,7 +20,7 @@ module.exports = [
       libraryTarget: "umd",
       publicPath: "/"
     },
-    externals: peerDependency,
+    externals: peerDependencies,
     plugins: [
       new CleanWebpackPlugin(),
       new MiniCssExtractPlugin({

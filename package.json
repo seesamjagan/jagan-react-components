@@ -1,6 +1,6 @@
 {
   "name": "jagan-react-components",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": true,
   "description": "library for web ui components build for react js",
   "keywords": [
@@ -12,9 +12,11 @@
   "directories": {
     "lib": "lib"
   },
+  "files": [
+    "lib"
+  ],
   "main": "./lib/index.js",
-  "module": "./lib/index.js",
-  "dependencies1": {
+  "dependenciesForRollup": {
     "cssnano": "^4.1.10",
     "eslint-plugin-react": "^7.14.3",
     "eslint": "^6.4.0",
@@ -46,7 +48,7 @@
     "webpack-dev-server": "^3.8.1",
     "xml-loader": "^1.2.1"
   },
-  "peerDependency": {
+  "peerDependencies": {
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
   },
