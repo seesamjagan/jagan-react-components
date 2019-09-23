@@ -1,11 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Footer } from "../src/index.js";
+import { Footer, Logo, LogoImgData } from "../src/index.js";
 
 const Index = () => {
   return (
     <React.Fragment>
-      <div>Hello React!</div>
+      <div><Logo />Jagan React Components</div>
+      
+      <img src={LogoImgData} />
       <Footer year={2019} org="Msys Technologies Inc" />
     </React.Fragment>
   );

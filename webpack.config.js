@@ -1,137 +1,92 @@
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const TerserJSPlugin = require("terser-webpack-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { peerDependency } = require("./package.json");
 
-const pkg = require("./package.json");
+const devMode = process.env.NODE_ENV !== "production";
 
+console.log({devMode})
 
-module.exports = ({ NODE_ENV }) => {
-  const isDevMode = !NODE_ENV ? false : NODE_ENV !== "production";
-
-  const BASE_PATH = path.resolve(__dirname);
-
-  const entry = [path.join(BASE_PATH, "src", "index.js")];
-
-  isDevMode && entry.push(path.join(BASE_PATH, "demo", "index.js"));
-
-  const output = {
-    path: path.resolve(__dirname, "lib"),
-    filename: "index.js",
-    library: {
-      root: "MsysReactLibrary",
-      amd: "msys-react-library",
-      commonjs: "common-msys-react-library"
+module.exports = [
+  {
+    mode: "production",//"development",
+    devtool: "inline-source-map",
+    entry: { main: "./src/index.js" },
+    output: {
+      filename: "index.js", //"[name].bundle.[hash].js",
+      path: path.resolve(__dirname, "lib"),
+      library: "JaganReactComponents",
+      libraryTarget: "umd",
+      publicPath: "/"
     },
-    libraryTarget: "umd", // "var" | "this" | "window"
-    pathinfo: isDevMode
-  };
-
-  const plugins = [
-    new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin({
-      filename: "assets/css/[name].css",
-      chunkFilename: "assets/css/[id].css",
-      ignoreOrder: false
-    })
-  ];
-
-  const include = [path.join(BASE_PATH, "src")];
-
-  if (isDevMode) {
-    plugins.splice(
-      0,
-      1, // remove the CleanWebpackPlugin
-      new HtmlWebpackPlugin({ template: "./demo/index.html" })
-    );
-
-    include.push(path.join(BASE_PATH, "demo"));
-  }
-
-  const module = {
-    rules: [
-      {
-        test: /\.(sa|sc|c)ss$/,
-        include,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: (resourcePath, context) => {
-                // publicPath is the relative path of the resource to the context
-                // e.g. for ./css/admin/main.css the publicPath will be ../../
-                // while for ./css/main.css the publicPath will be ../
-                return path.relative(path.dirname(resourcePath), context) + "/";
-              },
-              hmr: isDevMode
-            }
-          },
-          "css-loader",
-          "sass-loader"
-        ]
-      },
-      {
-        test: /\.jsx?$/,
-        include,
-        use: {
-          loader: "babel-loader"
-        }
-      }
-    ]
-  };
-
-  const devServer = {
-    contentBase: path.resolve(__dirname, "lib"),
-    headers: {
-      "X-Jagan-Langa": "running-from-webpack-dev-server"
-    },
-    port: 3000,
-    hot: true,
-    compress: true,
-    clientLogLevel: "silent", // 'info': 'silent' | 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'none' | 'warning'
-    after: (app, server) => {
-      console.log("running in localhost:3000");
-    }
-  };
-
-  const splitChunks = {
-    cacheGroups: {
-      styles: {
-        name: "styles",
-        test: /\.css$/,
-        chunks: "all",
-        enforce: true
-      }
-    }
-  };
-
-  const devtool = isDevMode ? "eval" : "source-map"; // inline-source-map || cheap-module-eval-source-map || eval
-
-  const externals = isDevMode
-    ? {}
-    : pkg.peerDependencies;/*[
+    externals: peerDependency,
+    plugins: [
+      new CleanWebpackPlugin(),
+      new MiniCssExtractPlugin({
+        publicPath: ".",
+        // Options similar to the same options in webpackOptions.output
+        // all options are optional
+        filename: "./assets/styles/[name]-[hash].css",
+        chunkFilename: "[id].css",
+        ignoreOrder: false // Enable to remove warnings about conflicting order
+      }),
+    ],
+    module: {
+      rules: [
         {
-          react: "react"
+          test: /\.s?css$/i,
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                hmr: devMode,
+                // if hmr does not work, this is a forceful method.
+                reloadAll: true
+              }
+            },
+            "css-loader",
+            "sass-loader"
+          ]
         },
-        "react-dom"
-      ];*/
-
-  return {
-    mode: NODE_ENV || "production",
-    entry,
-    output,
-    devtool,
-    devServer,
-    externals,
-    optimization: {
-      minimizer: isDevMode
-        ? []
-        : [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})]
-      // splitChunks, // to group all css chunk
-    },
-    plugins,
-    module
-  };
-};
+        {
+          test: /\.(png|svg|gif|jpe?g)$/i,
+          loader: "file-loader",
+          options: {
+              outputPath: "assets/images",
+              name: "[name].[contenthash].[ext]",
+          }
+        },
+        {
+          test: /\.(woff|woff2|eot|ttf|otf)$/i,
+          loader: "file-loader",
+          options: {
+            outputPath: "assets/fonts",
+            name: "[name].[ext]",
+          }
+        },
+        {
+          test: /\.(csv|tsv)$/i,
+          use: ["csv-loader"]
+        },
+        {
+          test: /\.xml$/i,
+          use: ["xml-loader"]
+        },
+        {
+            test: /\.js$/i,
+            exclude: /(node_modules|bower_components)/,
+            use: [
+              {
+                loader: "babel-loader",
+                options: {
+                  presets: ["@babel/preset-env"],
+                  plugins: ["@babel/plugin-proposal-object-rest-spread"]
+                }
+              }
+            ]
+          }
+      ]
+    }
+  }
+];
