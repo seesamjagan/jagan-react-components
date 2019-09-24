@@ -7,3 +7,4 @@ export function sayHello() {
 export * from "./footer/footer";
 export * from "./logo";
 export * from "./image";
+export * from "./clock";

@@ -1,10 +1,10 @@
 const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const nodeExternals = require('webpack-node-externals');
+const nodeExternals = require("webpack-node-externals");
 const devMode = process.env.NODE_ENV !== "production";
 
-console.log({devMode})
+console.log({ devMode });
 
 module.exports = [
   {
@@ -24,10 +24,10 @@ module.exports = [
         publicPath: ".",
         // Options similar to the same options in webpackOptions.output
         // all options are optional
-        filename: "./assets/styles/[name]-[hash].css",
+        filename: "./assets/styles/[name].css",
         chunkFilename: "[id].css",
         ignoreOrder: false // Enable to remove warnings about conflicting order
-      }),
+      })
     ],
     module: {
       rules: [
@@ -50,8 +50,8 @@ module.exports = [
           test: /\.(png|svg|gif|jpe?g)$/i,
           loader: "file-loader",
           options: {
-              outputPath: "assets/images",
-              name: "[name].[contenthash].[ext]",
+            outputPath: "assets/images",
+            name: "[name].[ext]"
           }
         },
         {
@@ -59,7 +59,7 @@ module.exports = [
           loader: "file-loader",
           options: {
             outputPath: "assets/fonts",
-            name: "[name].[ext]",
+            name: "[name].[ext]"
           }
         },
         {
@@ -71,18 +71,21 @@ module.exports = [
           use: ["xml-loader"]
         },
         {
-            test: /\.js$/i,
-            exclude: /(node_modules|bower_components)/,
-            use: [
-              {
-                loader: "babel-loader",
-                options: {
-                  presets: ["@babel/preset-env"],
-                  plugins: ["@babel/plugin-proposal-object-rest-spread"]
-                }
+          test: /\.js$/i,
+          exclude: /(node_modules|bower_components)/,
+          use: [
+            {
+              loader: "babel-loader",
+              options: {
+                presets: ["@babel/preset-env"],
+                plugins: [
+                  "@babel/plugin-proposal-class-properties",
+                  "@babel/plugin-proposal-object-rest-spread"
+                ]
               }
-            ]
-          }
+            }
+          ]
+        }
       ]
     }
   }

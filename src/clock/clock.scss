@@ -1,0 +1,23 @@
+.clock {
+    display: inline-block;
+    padding: 2px;
+    margin: 2px;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #000;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 500;
+    .unit{
+        animation: show-up 0.5s ease;
+
+    }
+}
+
+@keyframes show-up {
+    0% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 1;
+    }
+}
