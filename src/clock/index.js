@@ -41,6 +41,18 @@ export class Clock extends Component {
     m = paddZero(m);
     s = paddZero(s);
 
+    let { format = "24"} = this.props;
+    let day = "";
+    format = Number(format);
+    if(format === 12) {
+      if(h>=12) {
+        day = "PM"
+      } else {
+        day = "AM"
+      }
+      h %= 12;
+    }
+
     return (
       <span className="clock">
         <span className="unit" key={h + "h"}>
@@ -54,6 +66,7 @@ export class Clock extends Component {
         <span className="unit" key={s + "s"}>
           {s}
         </span>
+        {format === 12 && <span> {day}</span>}
       </span>
     );
   }
