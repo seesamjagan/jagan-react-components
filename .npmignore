@@ -14,10 +14,13 @@
 # source code and demos
 /src
 /demo
+/config
+/scripts
 
 # misc
 
 /.history
+/backup
 
 .DS_Store
 .env.local
