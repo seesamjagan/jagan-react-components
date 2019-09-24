@@ -15,6 +15,9 @@ module.exports = [
       path: path.resolve(__dirname, "lib"),
       publicPath: "/",
     },
+    watchOptions: {
+      ignored: ['node_modules', 'backup', 'lib']
+    },
     devServer: {
       contentBase: "./lib",
       headers: {

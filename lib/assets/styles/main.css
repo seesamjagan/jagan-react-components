@@ -1,6 +1,8 @@
-.container{position:relative}.root{display:grid;position:relative;color:white;background-color:#369;background-image:url(/assets/images/logo.png)}
+.container{position:relative}.root{display:grid;position:relative;color:white;background-color:#369;background-image:url(/assets/images/logo.png);background-repeat:no-repeat;background-position:center}
 
 .app-footer{text-align:center;font-size:small;color:black}
 
 .logo{background-image:url(/assets/images/logo.png);background-repeat:no-repeat;background-size:contain;border-radius:50%;box-shadow:0 0 4px 2px rgba(0,0,0,0.5);display:inline-block;position:relative;min-width:64px;min-height:64px;max-width:128px;max-height:128px}
+
+.clock{display:inline-block;padding:2px;margin:2px;border-radius:4px;background-color:#fff;color:#000;font-family:'Courier New', Courier, monospace;font-weight:500}.clock .unit{animation:show-up 0.5s ease}@keyframes show-up{0%{opacity:0.3}100%{opacity:1}}
 

@@ -38,6 +38,7 @@
     "csv-loader": "^3.0.2",
     "file-loader": "^4.2.0",
     "html-webpack-plugin": "^3.2.0",
+    "jest": "^24.9.0",
     "mini-css-extract-plugin": "^0.8.0",
     "node-sass": "^4.12.0",
     "react": "^16.9.0",
@@ -54,11 +55,36 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
   },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,mjs}"
+    ],
+    "coverageDirectory": "coverage",
+    "coverageReporters": ["text", "lcov"],
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
+      "<rootDir>/src/**/*.(spec|test).{js,jsx,mjs}"
+    ],
+    "transform": {
+      "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.s?css$": "<rootDir>/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+    },
+    
+    "testPathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/backup",
+      "<rootDir>/demo",
+      "<rootDir>/lib",
+      "<rootDir>/config"
+    ]
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
-    "watch": "webpack --watch",
-    "start": "webpack-dev-server --open --config webpack.config.dev.js"
+    "test": "node scripts/test.js --env=jsdom",
+    "test:coverage": "node scripts/test.js --env=jsdom --coverage",
+    "build": "webpack --env.NODE_ENV=production",
+    "watch": "webpack --watch --env.NODE_ENV=development",
+    "start": "webpack-dev-server --open --config webpack.config.dev.js --env.NODE_ENV=development"
   },
   "repository": {
     "type": "git",
